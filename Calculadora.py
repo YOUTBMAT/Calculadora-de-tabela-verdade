@@ -9,28 +9,34 @@ Uso:
 Executa tabela verdade para todas combinações de variáveis.
 """
 
+# Importações necessárias para o funcionamento do programa
+
 import re
 import itertools
 
-# Operadores e precedências
+# Dicionário que define os operadores lógicos suportados
+# Cada operador tem: (precedência, aridade, função lambda)
+# Precedência: maior número = maior prioridade
+# Aridade: 1 para unário (NOT), 2 para binário
+
 OPERATORS = {
     'NOT': (4, 1, lambda a: not a),
-    '!': (4, 1, lambda a: not a),
-    '~': (4, 1, lambda a: not a),
+    '!'  : (4, 1, lambda a: not a),
+    '~'  : (4, 1, lambda a: not a),
     'AND': (3, 2, lambda a, b: a and b),
-    '&': (3, 2, lambda a, b: a and b),
-    '*': (3, 2, lambda a, b: a and b),
-    'OR': (2, 2, lambda a, b: a or b),
-    '|': (2, 2, lambda a, b: a or b),
-    '+': (2, 2, lambda a, b: a or b),
+    '&'  : (3, 2, lambda a, b: a and b),
+    '*'  : (3, 2, lambda a, b: a and b),
+    'OR' : (2, 2, lambda a, b: a or b),
+    '|'  : (2, 2, lambda a, b: a or b),
+    '+'  : (2, 2, lambda a, b: a or b),
     'XOR': (2, 2, lambda a, b: a ^ b),
-    '^': (2, 2, lambda a, b: a ^ b),
-    '=>': (1, 2, lambda a, b: (not a) or b),
-    '->': (1, 2, lambda a, b: (not a) or b),
-    '<=': (1, 2, lambda a, b: (not b) or a),
-    '<-': (1, 2, lambda a, b: (not b) or a),
+    '^'  : (2, 2, lambda a, b: a ^ b),
+    '=>' : (1, 2, lambda a, b: (not a) or b),
+    '->' : (1, 2, lambda a, b: (not a) or b),
+    '<=' : (1, 2, lambda a, b: (not b) or a),
+    '<-' : (1, 2, lambda a, b: (not b) or a),
     '<->': (0, 2, lambda a, b: a == b),
-    '==': (0, 2, lambda a, b: a == b),
+    '==' : (0, 2, lambda a, b: a == b),
 }
 
 TOKEN_SPEC = [
